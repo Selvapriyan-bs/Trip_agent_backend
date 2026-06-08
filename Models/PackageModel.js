@@ -2,7 +2,7 @@ const mongoose =require("mongoose")
 const { link } = require("../Routers/UserRoutes")
 
 const PackageSchema = new mongoose.Schema({
- id:Number,
+ id_val:Number,
  title:String,
  destination:String,
  region:String,
