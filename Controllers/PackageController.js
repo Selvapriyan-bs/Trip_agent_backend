@@ -43,7 +43,12 @@ const createPackage = async (req, res) => {
 const getAllPackage = async (req, res) => {
     try {
         const package = await packagedata.find({});
-        res.status(200).json({ package }); // Changed status code to 200 standard OK
+        
+        res.status(205).json({
+            message:"Data found",
+            count: package.length,
+            data:package
+        })
     }
     catch (err) {
         res.status(500).json({
@@ -54,6 +59,6 @@ const getAllPackage = async (req, res) => {
 };
 
 module.exports = {
-    createPackage, // Exported the new function
-    getAllPackage,
-};
+getAllPackage,
+// getPackageById,
+}
