@@ -61,4 +61,5 @@ const getAllPackage = async (req, res) => {
 module.exports = {
 getAllPackage,
 // getPackageById,
+createPackage
 }
