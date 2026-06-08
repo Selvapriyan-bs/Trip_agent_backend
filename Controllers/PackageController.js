@@ -44,7 +44,7 @@ const getAllPackage = async (req, res) => {
     try {
         const package = await packagedata.find({});
         
-        res.status(205).json({
+        res.status(201).json({
             message:"Data found",
             count: package.length,
             data:package
