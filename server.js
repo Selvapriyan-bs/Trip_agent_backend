@@ -20,6 +20,9 @@ app.use("/api/booking",bookingdetails);
 const Package = require("./Routers/PackageRoutes");
 app.use("/api/package",Package)
 
+const Blog = require("./Routers/BlogRoutes");
+app.use("/api/blog", Blog)
+
 mongoose.connect(process.env.MONGO_URL)
     .then(() => { console.log("Connection to mongo_db Successfull..."); })
     .catch(() => { console.log("Connection to mongo_db FAILED. "); })

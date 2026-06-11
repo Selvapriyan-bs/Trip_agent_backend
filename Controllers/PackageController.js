@@ -1,11 +1,9 @@
 const packagedata = require("../Models/PackageModel");
 
-
 const createPackage = async (req, res) => {
     try {
-        const { title, country, badge, price, description, image } = req.body;
+        const { id_val, title, destination, region, country, price, days, rating, reviews, badge, description, image, itinerary } = req.body;
 
-    
         if (!title || !price) {
             return res.status(400).json({
                 success: false,
@@ -14,12 +12,11 @@ const createPackage = async (req, res) => {
         }
 
         const newPackage = new packagedata({
-            title,
-            country: country || "Global",
+            id_val, title, destination, region, country, price, days, rating, reviews,
             badge: badge || "New",
-            price,
             description: description || "No description provided.",
-            image: image || "https://images.unsplash.com/photo-1502602898657-3e91760cbb34" 
+            image: image || "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+            itinerary: itinerary || [],
         });
 
         const savedPackage = await newPackage.save();
@@ -39,16 +36,14 @@ const createPackage = async (req, res) => {
     }
 };
 
-// Fetch all packages
 const getAllPackage = async (req, res) => {
     try {
-        const package = await packagedata.find({});
-        
-        res.status(201).json({
-            message:"Data found",
-            count: package.length,
-            data:package
-        })
+        const packages = await packagedata.find({});
+        res.status(200).json({
+            message: "Data found",
+            count: packages.length,
+            data: packages,
+        });
     }
     catch (err) {
         res.status(500).json({
@@ -58,8 +53,20 @@ const getAllPackage = async (req, res) => {
     }
 };
 
+const getPackageById = async (req, res) => {
+    try {
+        const pkg = await packagedata.findById(req.params.id);
+        if (!pkg) {
+            return res.status(404).json({ message: "Package not found" });
+        }
+        res.status(200).json({ message: "Package found", data: pkg });
+    } catch (err) {
+        res.status(500).json({ message: "Error fetching package", error: err.message });
+    }
+};
+
 module.exports = {
-getAllPackage,
-// getPackageById,
-createPackage
+    getAllPackage,
+    getPackageById,
+    createPackage,
 }
