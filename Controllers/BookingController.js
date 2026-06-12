@@ -45,6 +45,20 @@ const details = async (req, res) => {
     }
 }
 
+const getAllBookings = async (req, res) => {
+    try {
+        const bookings = await booking.find().sort({ createdAt: -1 });
+        return res.status(200).json({ data: bookings });
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "Error fetching bookings",
+            error: err.message,
+        });
+    }
+};
+
 module.exports = {
     details,
+    getAllBookings,
 };

@@ -90,14 +90,12 @@ const forgotPassword = async (req, res) => {
 
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(404).json({ message: "No account found with this email" });
+            return res.status(400).json({ message: "Email not found. please try later" });
         }
-
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         user.otp = otp;
         user.otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
         await user.save();
-
         await sendOtpEmail(email, otp);
 
         res.status(200).json({ message: "OTP sent to your email" });
