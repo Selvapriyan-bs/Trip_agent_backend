@@ -83,7 +83,7 @@ const loginUser = async (req, res) => {
 const forgotPassword = async (req, res) => {
     try {
         const { email } = req.body;
-
+        console.log("Forgot password route called");
         if (!email) {
             return res.status(400).json({ message: "Email is required" });
         }
@@ -96,8 +96,9 @@ const forgotPassword = async (req, res) => {
         user.otp = otp;
         user.otpExpiry = new Date(Date.now() + 10 * 60 * 1000);
         await user.save();
+        console.log("Email sent started");
         await sendOtpEmail(email, otp);
-
+        console.log("Email sent successfully");
         res.status(200).json({ message: "OTP sent to your email" });
     }
     catch (error) {

@@ -58,7 +58,26 @@ const getAllBookings = async (req, res) => {
     }
 };
 
+const updateBookingStatus = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const updated = await booking.findByIdAndUpdate(id, { status }, { new: true });
+        if (!updated) {
+            return res.status(404).json({ message: "Booking not found" });
+        }
+        return res.status(200).json({ message: "Status updated", data: updated });
+    }
+    catch (err) {
+        return res.status(500).json({
+            message: "Error updating booking status",
+            error: err.message,
+        });
+    }
+};
+
 module.exports = {
     details,
     getAllBookings,
+    updateBookingStatus,
 };
