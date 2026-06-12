@@ -36,4 +36,16 @@ const deleteBlog = async (req, res) => {
   }
 };
 
-module.exports = { getAllBlogs, createBlog, deleteBlog };
+const updateBlog = async (req, res) => {
+  try {
+    const updated = await Blog.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!updated) {
+      return res.status(404).json({ success: false, message: "Blog not found" });
+    }
+    res.status(200).json({ success: true, message: "Blog updated", data: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Error updating blog", error: err.message });
+  }
+};
+
+module.exports = { getAllBlogs, createBlog, deleteBlog, updateBlog };
