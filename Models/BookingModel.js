@@ -13,6 +13,7 @@ const BookingSchema = new mongoose.Schema({
     paymentId: String,
     orderId: String,
     signature: String,
+    status: { type: String, default: "assign agent" },
 });
 
 module.exports = mongoose.model("BookingDetails",BookingSchema);
